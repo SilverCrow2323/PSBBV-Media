@@ -36,4 +36,4 @@ Host tests for parsers, scheduling, cache invalidation and provider failures; st
 
 ## Status
 
-Repository foundation and product boundary are in place. The manifest is provisional and still needs automated validation against the canonical Core schema. Product features remain planned until implemented and validated. User-facing UI and documentation are written in English and follow SPDW Factory's lively, clear visual identity.
+The first bounded local catalogue model is implemented and under host-CI validation. It supports typed media records, unique-ID upsert, removal, title search, favourites and bounded resume-position updates. Filesystem discovery, path-safety enforcement in a real provider, artwork, TV-show hierarchy, playback and Kodi add-on execution remain unimplemented. The manifest is provisional and is validated against the repository's pinned copy of the Core schema; schema synchronization remains a maintenance requirement. User-facing UI and documentation are written in English and follow SPDW Factory's lively, clear visual identity.
