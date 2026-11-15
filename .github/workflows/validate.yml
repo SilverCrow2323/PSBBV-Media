@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "psbbv-node.json"
+      - "CMakeLists.txt"\n      - "include/**"\n      - "src/**"\n      - "psbbv-node.json"
       - "schemas/**"
       - "tests/**"
       - ".github/workflows/validate.yml"
