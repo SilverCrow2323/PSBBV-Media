@@ -28,7 +28,8 @@
 
 ## Phase 1 — Domain foundation
 
-- [x] Bounded typed media-item model and host-tested local catalogue (insert/update/remove/search/favourites/resume position).\n- [ ] Collections, source providers and playback-session models.
+- [x] Bounded typed media-item model and host-tested local catalogue (insert/update/remove/search/favourites/resume position).
+- [ ] Collections, source providers and playback-session models.
 - [ ] Provider interfaces with explicit capability declarations.
 - [ ] Typed errors and deterministic result handling.
 - [ ] Host test harness and fixture catalogue.
@@ -38,7 +39,8 @@
 
 - [ ] Local movie library and metadata.
 - [ ] TV shows, seasons, episodes and resume state.
-- [ ] Search, sorting, filters and recently viewed.
+- [x] Search, kind/favourite filters and title/year sorting in the bounded catalogue query API.
+- [ ] Recently viewed and user-facing catalogue controls.
 - [ ] Artwork cache with bounded storage.
 - [ ] Empty, loading, unavailable and error states.
 
