@@ -40,7 +40,11 @@ CatalogueResult Catalogue::upsert(const MediaItem& item) noexcept {
 
     for (std::size_t i = 0; i < count_; ++i) {
         if (items_[i].id == item.id) {
+            const std::uint32_t savedPosition = items_[i].resumePositionMs;
+            const bool savedFavourite = items_[i].favourite;
             items_[i] = item;
+            items_[i].resumePositionMs = savedPosition;
+            items_[i].favourite = savedFavourite;
             if (items_[i].resumePositionMs > items_[i].durationMs && items_[i].durationMs != 0)
                 items_[i].resumePositionMs = items_[i].durationMs;
             return {};
