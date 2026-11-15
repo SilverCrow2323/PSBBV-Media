@@ -39,6 +39,7 @@ int main() {
     require(catalogue.setResumePosition(1, 45000).ok() &&
             catalogue.find(1)->resumePositionMs == 45000,
             "resume position is stored");
+    require(catalogue.setFavourite(1, true).ok(), "first item can be favourited");
     require(catalogue.setResumePosition(1, 100001).error == CatalogueError::InvalidPosition,
             "resume position cannot exceed known duration");
 
@@ -46,6 +47,8 @@ int main() {
     require(catalogue.upsert(replacement).ok() && catalogue.size() == 2 &&
             std::strcmp(catalogue.find(1)->title, "The Matrix Reloaded") == 0,
             "upsert replaces matching identity without duplication");
+    require(catalogue.find(1)->resumePositionMs == 45000 && catalogue.find(1)->favourite,
+            "metadata refresh preserves user resume and favourite state");
     require(catalogue.remove(2).ok() && catalogue.size() == 1,
             "remove compacts catalogue");
     require(catalogue.remove(99).error == CatalogueError::NotFound,
