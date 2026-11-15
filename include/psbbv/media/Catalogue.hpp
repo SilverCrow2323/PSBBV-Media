@@ -10,6 +10,15 @@ constexpr std::size_t MediaPathCapacity = 256;
 constexpr std::size_t MediaTitleCapacity = 128;
 
 enum class MediaKind : std::uint8_t { Movie, Episode, Music, Video };
+enum class MediaKindFilter : std::uint8_t { All, Movies, Episodes, Music, Videos };
+enum class MediaSortOrder : std::uint8_t { CatalogueOrder, TitleAscending, YearDescending };
+
+struct CatalogueQuery final {
+    MediaKindFilter kind = MediaKindFilter::All;
+    bool favouritesOnly = false;
+    MediaSortOrder sort = MediaSortOrder::CatalogueOrder;
+};
+
 enum class CatalogueError : std::uint8_t {
     None, InvalidId, InvalidKind, MissingPath, PathTooLong,
     MissingTitle, TitleTooLong, Full, NotFound, InvalidPosition
@@ -40,6 +49,8 @@ public:
     std::size_t size() const noexcept { return count_; }
     std::size_t searchTitle(const char* query, std::uint32_t* output,
                             std::size_t outputCapacity) const noexcept;
+    std::size_t query(const CatalogueQuery& filter, std::uint32_t* output,
+                      std::size_t outputCapacity) const noexcept;
     CatalogueResult setResumePosition(std::uint32_t id, std::uint32_t positionMs) noexcept;
     CatalogueResult setFavourite(std::uint32_t id, bool favourite) noexcept;
 
