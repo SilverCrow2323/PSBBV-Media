@@ -1,0 +1,29 @@
+{
+  "manifestVersion": 1,
+  "id": "factory.spdw.psbbv.media",
+  "name": "PSBBV Media",
+  "version": "0.1.0",
+  "apiVersion": "1.0",
+  "description": "Media libraries, user-configured sources and playback experiences for PSBBV.",
+  "category": "media",
+  "platforms": [
+    "psvita"
+  ],
+  "capabilities": [
+    "media.catalog.read",
+    "media.library.manage",
+    "media.playback",
+    "media.subtitle.select",
+    "media.audio.select",
+    "network.source.connect"
+  ],
+  "permissions": [
+    "media.read",
+    "network.client",
+    "storage.private"
+  ],
+  "availability": "planned",
+  "runtime": {
+    "kind": "builtin"
+  }
+}
