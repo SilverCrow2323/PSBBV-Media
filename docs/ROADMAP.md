@@ -28,7 +28,7 @@
 
 ## Phase 1 — Domain foundation
 
-- [ ] Typed models for media items, collections, sources and playback sessions.
+- [x] Bounded typed media-item model and host-tested local catalogue (insert/update/remove/search/favourites/resume position).\n- [ ] Collections, source providers and playback-session models.
 - [ ] Provider interfaces with explicit capability declarations.
 - [ ] Typed errors and deterministic result handling.
 - [ ] Host test harness and fixture catalogue.
