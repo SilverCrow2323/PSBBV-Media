@@ -1,6 +1,7 @@
 #include "psbbv/media/CatalogueStorage.hpp"
 
 #include <cstdlib>
+#include <cstdio>
 #include <cstring>
 #include <iostream>
 
@@ -48,6 +49,26 @@ int main() {
     std::uint8_t tooSmall[8]{};
     require(encodeCatalogue(original, tooSmall, sizeof(tooSmall)).error ==
             StorageError::BufferTooSmall, "small output buffer is rejected");
+    std::uint8_t partialBuffer[32]{};
+    require(encodeCatalogue(original, partialBuffer, sizeof(partialBuffer)).error ==
+            StorageError::BufferTooSmall, "buffer that fits header but not records is rejected");
+
+    Catalogue full;
+    for (std::uint32_t id = 1; id <= CatalogueCapacity; ++id) {
+        MediaItem entry{};
+        entry.id = id;
+        entry.kind = MediaKind::Video;
+        std::snprintf(entry.path, sizeof(entry.path), "ux0:video/%03u.mp4", id);
+        std::snprintf(entry.title, sizeof(entry.title), "Video %03u", id);
+        require(full.upsert(entry).ok(), "catalogue accepts every bounded slot");
+    }
+    require(full.size() == CatalogueCapacity, "catalogue reaches exact capacity");
+    std::uint8_t maximumSnapshot[CatalogueStorageMaxSize]{};
+    const StorageResult fullEncoded = encodeCatalogue(full, maximumSnapshot, sizeof(maximumSnapshot));
+    require(fullEncoded.ok(), "maximum-capacity catalogue encodes within documented bound");
+    Catalogue fullRestored;
+    require(decodeCatalogue(maximumSnapshot, fullEncoded.bytes, fullRestored).ok() &&
+            fullRestored.size() == CatalogueCapacity, "maximum-capacity snapshot round trips");
 
     Catalogue unchanged;
     require(unchanged.upsert(makeItem(99, "Keep me", "ux0:keep.mp4",
