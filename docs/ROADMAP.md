@@ -23,7 +23,7 @@
 - [x] Define product areas and platform boundaries.
 - [x] Define a measured Kodi add-on compatibility vocabulary.
 - [x] Add a provisional node manifest.
-- [ ] Add automated manifest validation against the canonical PSBBV schema.
+- [x] Add automated manifest validation against the pinned canonical PSBBV schema copy.
 - [ ] Add contribution, security and support policies.
 
 ## Phase 1 — Domain foundation
