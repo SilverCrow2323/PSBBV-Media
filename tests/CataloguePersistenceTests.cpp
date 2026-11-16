@@ -31,6 +31,11 @@ bool writeMemoryAtomic(void* context, const std::uint8_t* data, std::size_t size
     memory.size = size;
     return true;
 }
+bool reportOversizedRead(void*, std::uint8_t*, std::size_t capacity,
+                         std::size_t* bytesRead) noexcept {
+    *bytesRead = capacity + 1;
+    return true;
+}
 }
 
 int main() {
@@ -63,6 +68,15 @@ int main() {
     require(loadCatalogue(loaded, backend, workspace, sizeof(workspace)).error ==
             PersistenceError::BackendReadFailed, "read failure is surfaced");
     memory.failRead = false;
+
+    CatalogueStorageBackend oversizedBackend{nullptr, reportOversizedRead, nullptr};
+    const PersistenceResult oversized = loadCatalogue(
+        loaded, oversizedBackend, workspace, sizeof(workspace));
+    require(oversized.error == PersistenceError::BackendReadFailed &&
+            oversized.codecError == StorageError::InvalidLength,
+            "backend cannot report a read larger than the supplied workspace");
+    require(loaded.find(7) != nullptr,
+            "oversized backend read preserves the live catalogue");
 
     Catalogue untouched;
     MediaItem keep{};
