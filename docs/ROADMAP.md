@@ -31,6 +31,7 @@
 - [x] Bounded typed media-item model and host-tested local catalogue (insert/update/remove/search/favourites/resume position).
 - [ ] Collections, source providers and playback-session models.
 - [x] Portable catalogue storage codec (explicit little-endian fields; no raw-struct serialization).
+- [x] Backend-neutral save/load orchestration with caller-owned workspace and atomic-write callback contract.
 - [ ] Provider interfaces with explicit capability declarations.
 - [ ] Typed errors and deterministic result handling.
 - [ ] Host test harness and fixture catalogue.
