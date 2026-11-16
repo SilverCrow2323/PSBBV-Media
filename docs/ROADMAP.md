@@ -30,6 +30,7 @@
 
 - [x] Bounded typed media-item model and host-tested local catalogue (insert/update/remove/search/favourites/resume position).
 - [ ] Collections, source providers and playback-session models.
+- [x] Portable catalogue storage codec (explicit little-endian fields; no raw-struct serialization).
 - [ ] Provider interfaces with explicit capability declarations.
 - [ ] Typed errors and deterministic result handling.
 - [ ] Host test harness and fixture catalogue.
@@ -40,7 +41,9 @@
 - [ ] Local movie library and metadata.
 - [ ] TV shows, seasons, episodes and resume state.
 - [x] Search, kind/favourite filters and title/year sorting in the bounded catalogue query API.
+- [x] Versioned, bounded catalogue snapshot codec with CRC32 integrity check and transactional restore.
 - [ ] Recently viewed and user-facing catalogue controls.
+- [ ] Vita filesystem adapter, atomic file replacement and recovery policy.
 - [ ] Artwork cache with bounded storage.
 - [ ] Empty, loading, unavailable and error states.
 
