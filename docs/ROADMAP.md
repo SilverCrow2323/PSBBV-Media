@@ -34,7 +34,7 @@
 - [x] Backend-neutral save/load orchestration with caller-owned workspace and atomic-write callback contract.
 - [ ] Provider interfaces with explicit capability declarations.
 - [ ] Typed errors and deterministic result handling.
-- [ ] Host test harness and fixture catalogue.
+- [x] Host test harness and deterministic catalogue tests.
 - [ ] Safe URL, path and credential handling.
 
 ## Phase 2 — Catalogue experience
