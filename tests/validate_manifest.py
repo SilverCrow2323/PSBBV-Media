@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate the Media node manifest against the pinned PSBBV Core contract."""
 
+import copy
 import json
 from pathlib import Path
 
@@ -27,7 +28,28 @@ def main() -> int:
             location = ".".join(str(part) for part in error.absolute_path) or "<root>"
             print(f"INVALID {location}: {error.message}")
         return 1
-    print("PSBBV Media manifest: valid against pinned Core schema.")
+    invalid_cases = []
+    too_many_capabilities = copy.deepcopy(manifest)
+    too_many_capabilities["capabilities"] = [f"media.item{i}" for i in range(17)]
+    invalid_cases.append(("capability array overflow", too_many_capabilities))
+
+    too_many_permissions = copy.deepcopy(manifest)
+    too_many_permissions["permissions"] = [
+        "media.read", "media.write", "network.client",
+        "storage.private", "storage.shared.read", "input.global", "media.read"
+    ]
+    invalid_cases.append(("permission array overflow", too_many_permissions))
+
+    malformed_capability = copy.deepcopy(manifest)
+    malformed_capability["capabilities"] = ["Invalid.Capability"]
+    invalid_cases.append(("malformed capability identifier", malformed_capability))
+
+    for label, fixture in invalid_cases:
+        if not list(validator.iter_errors(fixture)):
+            print(f"INVALID TEST: {label} was not rejected by the schema.")
+            return 1
+
+    print(f"PSBBV Media manifest: valid; {len(invalid_cases)} invalid contract fixtures rejected.")
     return 0
 
 
