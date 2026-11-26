@@ -82,6 +82,22 @@ int main() {
     require(unchanged.size() == 1 && unchanged.find(99) != nullptr,
             "failed decode leaves destination unchanged");
 
+    // Deterministic one-bit corruption sweep: every byte in a valid snapshot
+    // must either be rejected or remain byte-for-byte semantically intact.
+    for (std::size_t offset = 0; offset < encoded.bytes; ++offset) {
+        std::uint8_t mutated[CatalogueStorageMaxSize]{};
+        std::memcpy(mutated, bytes, encoded.bytes);
+        mutated[offset] ^= 0x01;
+        Catalogue guarded;
+        require(guarded.upsert(makeItem(99, "Guard", "ux0:guard.mp4",
+                                        MediaKind::Video, 2020, 0, true)).ok(),
+                "prepare mutation guard");
+        const StorageResult result = decodeCatalogue(mutated, encoded.bytes, guarded);
+        require(!result.ok(), "single-bit snapshot corruption is rejected");
+        require(guarded.size() == 1 && guarded.find(99) != nullptr,
+                "corrupt snapshot never partially replaces destination");
+    }
+
     require(decodeCatalogue(bytes, encoded.bytes - 1, unchanged).error ==
             StorageError::InvalidLength, "truncated snapshot is rejected");
     std::uint8_t badVersion[CatalogueStorageMaxSize]{};
