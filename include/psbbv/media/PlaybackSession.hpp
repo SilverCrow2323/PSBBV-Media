@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 namespace psbbv::media {
-enum class PlaybackState : std::uint8_t { Idle, Resolving, Ready, Playing, Paused, Stopped, Error };
+enum class PlaybackState : std::uint8_t { Idle, Resolving, Ready, Playing, Paused, Stopped, Completed, Error };
 enum class PlaybackError : std::uint8_t { None, InvalidTransition, InvalidDuration, InvalidPosition };
 class PlaybackSession final {
 public:
@@ -11,6 +11,7 @@ public:
     PlaybackError pause() noexcept;
     PlaybackError resume() noexcept;
     PlaybackError stop() noexcept;
+    PlaybackError complete() noexcept;
     PlaybackError fail() noexcept;
     PlaybackError seek(std::uint32_t positionMs) noexcept;
     PlaybackState state() const noexcept { return state_; }

@@ -1,7 +1,7 @@
 #include "psbbv/media/PlaybackSession.hpp"
 namespace psbbv::media {
 PlaybackError PlaybackSession::beginResolve() noexcept {
-    if (state_ != PlaybackState::Idle && state_ != PlaybackState::Stopped && state_ != PlaybackState::Error)
+    if (state_ != PlaybackState::Idle && state_ != PlaybackState::Stopped && state_ != PlaybackState::Completed && state_ != PlaybackState::Error)
         return PlaybackError::InvalidTransition;
     state_ = PlaybackState::Resolving; durationMs_ = 0; positionMs_ = 0;
     return PlaybackError::None;
@@ -28,6 +28,13 @@ PlaybackError PlaybackSession::stop() noexcept {
     if (state_ != PlaybackState::Ready && state_ != PlaybackState::Playing && state_ != PlaybackState::Paused)
         return PlaybackError::InvalidTransition;
     state_ = PlaybackState::Stopped; return PlaybackError::None;
+}
+PlaybackError PlaybackSession::complete() noexcept {
+    if (state_ != PlaybackState::Playing && state_ != PlaybackState::Paused)
+        return PlaybackError::InvalidTransition;
+    positionMs_ = durationMs_;
+    state_ = PlaybackState::Completed;
+    return PlaybackError::None;
 }
 PlaybackError PlaybackSession::fail() noexcept {
     if (state_ == PlaybackState::Idle || state_ == PlaybackState::Stopped || state_ == PlaybackState::Error)
