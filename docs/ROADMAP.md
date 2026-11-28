@@ -88,3 +88,9 @@ No feature is marked ready because a screen exists or a build passes. Each featu
 ---
 
 **SPDW FACTORY** · Progress you can verify.
+
+## Evening integration evidence — 2026-11-28
+
+- Verified [Media node validation #46124354774](https://github.com/SilverCrow2323/PSBBV-Media/actions/runs/46124354774) on `400a69b`.
+- The manifest/schema validation passed. The separate playback-completion implementation remains in PR #3 and its own host test run.
+- Remaining gate: integrate against the Core lifecycle and validate playback state transitions on Vita; no physical playback test is claimed.
