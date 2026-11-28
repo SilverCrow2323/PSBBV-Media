@@ -94,3 +94,8 @@ No feature is marked ready because a screen exists or a build passes. Each featu
 - Verified [Media node validation #46124354774](https://github.com/SilverCrow2323/PSBBV-Media/actions/runs/46124354774) on `400a69b`.
 - The manifest/schema validation passed. The separate playback-completion implementation remains in PR #3 and its own host test run.
 - Remaining gate: integrate against the Core lifecycle and validate playback state transitions on Vita; no physical playback test is claimed.
+
+## Release readiness verification — 2026-11-28
+
+- Workflow evidence: https://github.com/SilverCrow2323/PSBBV-Media/actions/runs/46179970482.
+- The node-identity contract and host catalogue validation passed on `5259421`. This does not prove media decoding/playback on Vita; retain the explicit playback-completion and device integration gates.
